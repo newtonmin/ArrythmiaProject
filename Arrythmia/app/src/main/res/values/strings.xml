@@ -4,5 +4,6 @@
     <string name="app_name">Arrythmia</string>
     <string name="hello_world">Hello Arrythmia!!!</string>
     <string name="action_settings">Settings</string>
+    <string name="btnTest">Test Button</string>
 
 </resources>
