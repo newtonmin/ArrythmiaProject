@@ -86,17 +86,18 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case REQUEST_CONNECT_DEVICE:
-                // When DeviceListActivity returns with a device to connect
-                if (resultCode == Activity.RESULT_OK){
-                }
-                break;
-            case REQUEST_ENABLE_BT:
-                // When the request to enable Bluetooth returns
-                if (resultCode == Activity.RESULT_OK){
-                }
-                break;
+        if(resultCode == Activity.RESULT_OK){
+            switch (requestCode) {
+                case REQUEST_CONNECT_DEVICE:
+                    // When DeviceListActivity returns with a device to connect
+                    // Get the device MAC address
+                    String address = data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+                    Toast.makeText(this, address, Toast.LENGTH_LONG).show();
+                    break;
+                case REQUEST_ENABLE_BT:
+                    // When the request to enable Bluetooth returns
+                    break;
+            }
         }
     }
 
