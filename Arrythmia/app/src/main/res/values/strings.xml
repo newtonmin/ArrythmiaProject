@@ -23,5 +23,8 @@
     <string name="status_label">Status</string>
     <string name="status_off">Run</string>
     <string name="status_on">Pause</string>
+    <string name="action_connect">Connect</string>
+    <string name="action_device">Devices</string>
+    <string name="action_help">Help</string>
 
 </resources>
