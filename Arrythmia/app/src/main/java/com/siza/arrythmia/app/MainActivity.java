@@ -2,11 +2,15 @@ package com.siza.arrythmia.app;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -16,8 +20,16 @@ public class MainActivity extends ActionBarActivity {
     private static final int REQUEST_CONNECT_DEVICE = 1;
     private static final int REQUEST_ENABLE_BT = 2;
 
+    // Name of the connected device
+    private String mConnectedDeviceName = null;
+
+    // Address of the connected device
+    private String mConnectedAddress = null;
+
     // Local Bluetooth adapter
     private BluetoothAdapter mBluetoothAdapter = null;
+    // Member object for the RFCOMM services
+    private BluetoothRfCommClient mRfcommClient = null;
 
     // Message types sent from the BluetoothRfcommClient Handler
     public static final int MESSAGE_STATE_CHANGE = 1;
@@ -29,6 +41,11 @@ public class MainActivity extends ActionBarActivity {
     // Key names received from the BluetoothRfcommClient Handler
     public static final String DEVICE_NAME = "device_name";
     public static final String TOAST = "toast";
+
+    // Layout Views
+    private TextView conStatus;
+    private TextView btAddress;
+    private TextView debugMessages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +74,7 @@ public class MainActivity extends ActionBarActivity {
         }
         //Otherwise, setup the Oscillosope session
         else{
-            //if (mRfcommClient == null) setupOscilloscope();
+            if (mRfcommClient == null) setup();
         }
     }
 
@@ -104,9 +121,15 @@ public class MainActivity extends ActionBarActivity {
                     // Get the device MAC address
                     String address = data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
                     Toast.makeText(this, address, Toast.LENGTH_LONG).show();
+                    // Get the BLuetoothDevice object
+                    BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+                    // Attempt to connect to the device
+                    mRfcommClient.connect(device);
+                    mConnectedAddress = address;
                     break;
                 case REQUEST_ENABLE_BT:
                     // When the request to enable Bluetooth returns
+                    setup();
                     break;
             }
         }
@@ -116,4 +139,58 @@ public class MainActivity extends ActionBarActivity {
         Intent serverIntent = new Intent(this, DeviceListActivity.class);
         startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
     }
+
+    private void setup(){
+        conStatus = (TextView) findViewById(R.id.tvConState);
+        btAddress = (TextView) findViewById(R.id.tvAddress);
+        debugMessages = (TextView)findViewById(R.id.tvDebug);
+
+        // Initialize the BluetoothRfcommClient to perform bluetooth connections
+        mRfcommClient = new BluetoothRfCommClient(this, mHandler);
+    }
+
+    // The Handler that gets information back from the BluetoothRfcommClient
+    private final Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg){
+            switch (msg.what){
+                case MESSAGE_STATE_CHANGE:
+                    switch (msg.arg1){
+                        case BluetoothRfCommClient.STATE_CONNECTED:
+                            conStatus.setText("Connected");
+                            btAddress.setText(mConnectedAddress);
+                            debugMessages.append("\n" + mConnectedDeviceName + "Connected");
+                            break;
+                        case BluetoothRfCommClient.STATE_CONNECTING:
+                            debugMessages.append("\n" + "Connecting...");
+                            break;
+                        case BluetoothRfCommClient.STATE_NONE:
+                            conStatus.setText("Not Connected");
+                            debugMessages.append("\n" + "Disconnected");
+                            break;
+                    }
+                    break;
+                case MESSAGE_READ:
+                    debugMessages.append("\n" + msg);
+                    break;
+                case MESSAGE_DEVICE_NAME:
+                    // save the connected device's name
+                    mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
+                    Toast.makeText(getApplicationContext(), "Connected to "
+                            + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
+                    break;
+                case MESSAGE_TOAST:
+                    Toast.makeText(getApplicationContext(), msg.getData().getString(TOAST),
+                            Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+        // signed to unsigned
+        private int UByte(byte b){
+            if(b<0) // if negative
+                return (int)( (b&0x7F) + 128 );
+            else
+                return (int)b;
+        }
+    };
 }
