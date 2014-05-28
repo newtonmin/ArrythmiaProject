@@ -10,6 +10,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +48,7 @@ public class MainActivity extends ActionBarActivity {
     private TextView conStatus;
     private TextView btAddress;
     private TextView debugMessages;
+    private Button sendButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +135,18 @@ public class MainActivity extends ActionBarActivity {
                     setup();
                     break;
             }
+        }else{
+            // User did not enable Bluetooth or an error occured
+            Toast.makeText(this, R.string.bt_not_enabled_leaving, Toast.LENGTH_SHORT).show();
+            finish();
         }
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        // Stop the Bluetooth RFCOMM services
+        if (mRfcommClient != null) mRfcommClient.stop();
     }
 
     private void bluetoothDevices(){
@@ -140,10 +154,35 @@ public class MainActivity extends ActionBarActivity {
         startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
     }
 
+    /**
+     * Sends a message.
+     * @param message  A string of text to send.
+     */
+    private void sendMessage(String message){
+        // Check that we're actually connected before trying anything
+        if (mRfcommClient.getState() != BluetoothRfCommClient.STATE_CONNECTED) {
+            Toast.makeText(this, R.string.not_connected, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        // Check that there's actually something to send
+        if (message.length() > 0) {
+            // Get the message bytes and tell the BluetoothRfcommClient to write
+            byte[] send = message.getBytes();
+            mRfcommClient.write(send);
+        }
+    }
+
     private void setup(){
         conStatus = (TextView) findViewById(R.id.tvConState);
         btAddress = (TextView) findViewById(R.id.tvAddress);
         debugMessages = (TextView)findViewById(R.id.tvDebug);
+        sendButton = (Button)findViewById(R.id.bSend);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendMessage("Test");
+            }
+        });
 
         // Initialize the BluetoothRfcommClient to perform bluetooth connections
         mRfcommClient = new BluetoothRfCommClient(this, mHandler);
