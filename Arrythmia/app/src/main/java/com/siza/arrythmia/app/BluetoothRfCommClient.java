@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -189,7 +190,7 @@ public class BluetoothRfCommClient {
             try {
                 tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
             } catch (IOException e) {
-                //
+                e.printStackTrace();
             }
             mmSocket = tmp;
         }
@@ -226,7 +227,7 @@ public class BluetoothRfCommClient {
             try {
                 mmSocket.close();
             } catch (IOException e) {
-                //
+                Log.e("Connect Thread", "Socket close failed", e);
             }
         }
     }
@@ -249,6 +250,7 @@ public class BluetoothRfCommClient {
                 tmpIn = socket.getInputStream();
                 tmpOut = socket.getOutputStream();
             } catch (IOException e) {
+                Log.e("Connect Thread", "IO socket not created", e);
             }
 
             mmInStream = tmpIn;
@@ -256,7 +258,7 @@ public class BluetoothRfCommClient {
         }
 
         public void run() {
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[256];
             int bytes;
             // Keep listening to the InputStream while connected
             while (true) {
@@ -284,7 +286,6 @@ public class BluetoothRfCommClient {
                 mHandler.obtainMessage(MainActivity.MESSAGE_WRITE, -1, -1, buffer)
                         .sendToTarget();
             } catch (IOException e) {
-                //
             }
         }
 
@@ -292,7 +293,6 @@ public class BluetoothRfCommClient {
             try {
                 mmSocket.close();
             } catch (IOException e) {
-                //
             }
         }
     }

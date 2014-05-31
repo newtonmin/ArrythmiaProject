@@ -3,9 +3,11 @@ package com.siza.arrythmia.app;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -40,6 +42,11 @@ public class MainActivity extends ActionBarActivity {
     public static final int MESSAGE_DEVICE_NAME = 4;
     public static final int MESSAGE_TOAST = 5;
 
+    // Time delay parameters
+    public static long timeStart;
+    public static long timeEnd;
+
+
     // Key names received from the BluetoothRfcommClient Handler
     public static final String DEVICE_NAME = "device_name";
     public static final String TOAST = "toast";
@@ -49,6 +56,9 @@ public class MainActivity extends ActionBarActivity {
     private TextView btAddress;
     private TextView debugMessages;
     private Button sendButton;
+
+    // stay awake
+    protected PowerManager.WakeLock mWakeLock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +74,11 @@ public class MainActivity extends ActionBarActivity {
             finish();
             //return;
         }
+
+        // Prevent phone from sleeping
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        this.mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "My Tag");
+        this.mWakeLock.acquire();
     }
 
     @Override
@@ -78,6 +93,32 @@ public class MainActivity extends ActionBarActivity {
         //Otherwise, setup the Oscillosope session
         else{
             if (mRfcommClient == null) setup();
+        }
+    }
+
+    @Override
+    public synchronized void onResume(){
+        super.onResume();
+        // Performing this check in onResume() covers the case in which BT was
+        // not enabled during onStart(), so we were paused to enable it...
+        // onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
+        if (mRfcommClient != null) {
+            // Only if the state is STATE_NONE, do we know that we haven't started already
+            if (mRfcommClient.getState() == BluetoothRfCommClient.STATE_NONE) {
+                // Start the Bluetooth  RFCOMM services
+                mRfcommClient.start();
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        // Stop the Bluetooth RFCOMM services
+        if (mRfcommClient != null) mRfcommClient.stop();
+        // release screen being on
+        if (mWakeLock.isHeld()) {
+            mWakeLock.release();
         }
     }
 
@@ -128,6 +169,9 @@ public class MainActivity extends ActionBarActivity {
                     BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
                     // Attempt to connect to the device
                     mRfcommClient.connect(device);
+                    timeEnd = System.currentTimeMillis();
+                    long totalTime = timeEnd - timeStart;
+                    Toast.makeText(this, Long.toString(totalTime), Toast.LENGTH_LONG).show();
                     mConnectedAddress = address;
                     break;
                 case REQUEST_ENABLE_BT:
@@ -140,13 +184,6 @@ public class MainActivity extends ActionBarActivity {
             Toast.makeText(this, R.string.bt_not_enabled_leaving, Toast.LENGTH_SHORT).show();
             finish();
         }
-    }
-
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        // Stop the Bluetooth RFCOMM services
-        if (mRfcommClient != null) mRfcommClient.stop();
     }
 
     private void bluetoothDevices(){
@@ -180,6 +217,7 @@ public class MainActivity extends ActionBarActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 sendMessage("Test");
             }
         });
@@ -210,7 +248,18 @@ public class MainActivity extends ActionBarActivity {
                     }
                     break;
                 case MESSAGE_READ:
-                    debugMessages.append("\n" + msg);
+                    byte[] readBuf = (byte[]) msg.obj;
+                    String strIncom = new String(readBuf, 0, msg.arg1);                 // create string from bytes array
+                    debugMessages.append(strIncom);                              // append string
+//                    int endOfLineIndex = sb.indexOf("\r\n");                            // determine the end-of-line
+//                    if (endOfLineIndex > 0) {                                            // if end-of-line,
+//                        String sbprint = sb.substring(0, endOfLineIndex);               // extract string
+//                        sb.delete(0, sb.length());                                      // and clear
+//                        txtArduino.setText("Data from Arduino: " + sbprint);            // update TextView
+//                        btnOff.setEnabled(true);
+//                        btnOn.setEnabled(true);
+//                    }
+
                     break;
                 case MESSAGE_DEVICE_NAME:
                     // save the connected device's name
