@@ -250,7 +250,7 @@ public class MainActivity extends ActionBarActivity {
                 case MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
                     String strIncom = new String(readBuf, 0, msg.arg1);                 // create string from bytes array
-                    debugMessages.append(strIncom);                              // append string
+                    debugMessages.append(strIncom);                                     // append string
 //                    int endOfLineIndex = sb.indexOf("\r\n");                            // determine the end-of-line
 //                    if (endOfLineIndex > 0) {                                            // if end-of-line,
 //                        String sbprint = sb.substring(0, endOfLineIndex);               // extract string
