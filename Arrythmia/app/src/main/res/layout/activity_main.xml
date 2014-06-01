@@ -23,23 +23,20 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Bluetooth Address"
-        android:id="@+id/tvAddress"
+        android:id="@+id/remoteAddress"
         android:layout_gravity="right"
-        android:layout_below="@+id/tvConState"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/lblRemoteAddress"
+        android:layout_toRightOf="@+id/scrollView" />
 
     <TextView
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
-        android:id="@+id/textView4"
+        android:text="Remote Address"
+        android:id="@+id/lblRemoteAddress"
         android:layout_gravity="right"
-        android:layout_below="@+id/tvAddress"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/tvConState"
+        android:layout_toRightOf="@+id/scrollView" />
 
     <Button
         android:layout_width="150dp"
@@ -76,5 +73,26 @@
             android:linksClickable="false"
             android:minLines="12" />
     </ScrollView>
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Local Address"
+        android:id="@+id/lblLocalAddress"
+        android:layout_gravity="right"
+        android:layout_below="@+id/remoteAddress"
+        android:layout_alignRight="@+id/remoteAddress"
+        android:layout_alignEnd="@+id/remoteAddress" />
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/localAddress"
+        android:layout_gravity="right"
+        android:layout_below="@+id/lblLocalAddress"
+        android:layout_alignRight="@+id/lblLocalAddress"
+        android:layout_alignEnd="@+id/lblLocalAddress" />
 
 </RelativeLayout>

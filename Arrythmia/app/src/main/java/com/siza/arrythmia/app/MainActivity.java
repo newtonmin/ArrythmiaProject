@@ -53,7 +53,8 @@ public class MainActivity extends ActionBarActivity {
 
     // Layout Views
     private TextView conStatus;
-    private TextView btAddress;
+    private TextView localAddress;
+    private TextView remoteAddress;
     private TextView debugMessages;
     private Button sendButton;
 
@@ -211,7 +212,8 @@ public class MainActivity extends ActionBarActivity {
 
     private void setup(){
         conStatus = (TextView) findViewById(R.id.tvConState);
-        btAddress = (TextView) findViewById(R.id.tvAddress);
+        localAddress = (TextView) findViewById(R.id.localAddress);
+        remoteAddress = (TextView)findViewById(R.id.remoteAddress);
         debugMessages = (TextView)findViewById(R.id.tvDebug);
 
         // Send button
@@ -247,7 +249,8 @@ public class MainActivity extends ActionBarActivity {
                     switch (msg.arg1){
                         case BluetoothRfCommClient.STATE_CONNECTED:
                             conStatus.setText("Connected");
-                            btAddress.setText(mConnectedAddress);
+                            remoteAddress.setText(mConnectedAddress);
+                            localAddress.setText(mBluetoothAdapter.getAddress());
                             debugMessages.append("\n" + mConnectedDeviceName + "Connected");
                             break;
                         case BluetoothRfCommClient.STATE_CONNECTING:
@@ -255,6 +258,8 @@ public class MainActivity extends ActionBarActivity {
                             break;
                         case BluetoothRfCommClient.STATE_NONE:
                             conStatus.setText("Not Connected");
+                            remoteAddress.setText("");
+                            localAddress.setText("");
                             debugMessages.append("\n" + "Disconnected");
                             break;
                     }
