@@ -23,6 +23,8 @@ public class BluetoothRfCommClient {
     private static final UUID MY_UUID =
             //UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
             UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+            //UUID.fromString("ffffffff-c841-657c-0033-c5870033c587");
+            //UUID.fromString("ffffffff-a93b-d531-b438-e7a00033c587");
 
     // Member fields
     private final BluetoothAdapter mAdapter;
