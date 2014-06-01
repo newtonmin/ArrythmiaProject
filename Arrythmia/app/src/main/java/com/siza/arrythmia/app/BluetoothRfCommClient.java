@@ -258,7 +258,7 @@ public class BluetoothRfCommClient {
         }
 
         public void run() {
-            byte[] buffer = new byte[256];
+            byte[] buffer = new byte[1024];
             int bytes;
             // Keep listening to the InputStream while connected
             while (true) {
