@@ -213,12 +213,24 @@ public class MainActivity extends ActionBarActivity {
         conStatus = (TextView) findViewById(R.id.tvConState);
         btAddress = (TextView) findViewById(R.id.tvAddress);
         debugMessages = (TextView)findViewById(R.id.tvDebug);
+
+        // Send button
         sendButton = (Button)findViewById(R.id.bSend);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 sendMessage("Test");
+            }
+        });
+
+        // Clear button
+        sendButton = (Button)findViewById(R.id.bClear);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                debugMessages.setText("");
             }
         });
 

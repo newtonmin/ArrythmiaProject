@@ -25,11 +25,10 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Bluetooth Address"
         android:id="@+id/tvAddress"
-        android:layout_marginTop="41dp"
+        android:layout_gravity="right"
         android:layout_below="@+id/tvConState"
-        android:layout_alignLeft="@+id/tvConState"
-        android:layout_alignStart="@+id/tvConState"
-        android:layout_gravity="right" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="150dp"
@@ -37,39 +36,45 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
         android:id="@+id/textView4"
-        android:layout_centerVertical="true"
+        android:layout_gravity="right"
+        android:layout_below="@+id/tvAddress"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="right" />
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Send"
         android:id="@+id/bSend"
-        android:layout_marginBottom="19dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_toRightOf="@+id/scrollView" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Clear"
+        android:id="@+id/bClear"
+        android:layout_above="@+id/bSend"
+        android:layout_alignRight="@+id/bSend"
+        android:layout_alignEnd="@+id/bSend" />
 
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:id="@+id/scrollView"
-        android:scrollbars="vertical">
+        android:scrollbars="vertical"
+        android:layout_toLeftOf="@+id/tvConState"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <TextView
-            android:layout_width="200dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/tvDebug"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
             android:lines="1000"
             android:linksClickable="false"
-            android:textAllCaps="false" />
+            android:minLines="12" />
     </ScrollView>
 
 </RelativeLayout>
