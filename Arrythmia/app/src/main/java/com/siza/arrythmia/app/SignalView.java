@@ -8,24 +8,25 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class SignalView extends SurfaceView implements SurfaceHolder.Callback{
 
     // plot area size
-    public static int width = 400;
-    public static int height = 300;
+    public static int width = 1080;
+    public static int height = 662;
 
     private static int[] ch1_data;
-    private static int[] ch2_data;
+    //private static int[] ch2_data;
     private static int ch1_pos; //HEIGHT/2;
-    private static int ch2_pos; //HEIGHT/2;
+    //private static int ch2_pos; //HEIGHT/2;
 
     private SignalPlotThread plot_thread;
 
     private Paint ch1_color = new Paint();
-    private Paint ch2_color = new Paint();
+    //private Paint ch2_color = new Paint();
     private Paint grid_paint = new Paint();
     private Paint cross_paint = new Paint();
     private Paint outline_paint = new Paint();
@@ -37,36 +38,22 @@ public class SignalView extends SurfaceView implements SurfaceHolder.Callback{
 
         // initial values
         ch1_data = new int[width];
-        ch2_data = new int[width];
+        //ch2_data = new int[width];
         ch1_pos = height/2;
-        ch2_pos = height/2;
+        //ch2_pos = height/2;
 
-        for(int x=0; x<width; x++){
+        for(int x=0; x<width; x++){ // Reference line
             ch1_data[x] = ch1_pos;
-            ch2_data[x] = ch2_pos;
+            //ch2_data[x] = ch2_pos;
         }
 
         plot_thread = new SignalPlotThread(getHolder(), this);
 
         ch1_color.setColor(Color.YELLOW);
-        ch2_color.setColor(Color.RED);
+        //ch2_color.setColor(Color.RED);
         grid_paint.setColor(Color.rgb(100, 100, 100));
         cross_paint.setColor(Color.rgb(70, 100, 70));
         outline_paint.setColor(Color.GREEN);
-    }
-
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-
-        //Get the SurfaceView layout parameters
-        android.view.ViewGroup.LayoutParams lp = this.getLayoutParams();
-
-        lp.width = w; // store the width
-        lp.height = h; // store the height
-
-        //Commit the layout parameters
-        this.setLayoutParams(lp);
     }
 
     @Override
@@ -89,35 +76,40 @@ public class SignalView extends SurfaceView implements SurfaceHolder.Callback{
                 plot_thread.join();
                 retry = false;
             }catch(InterruptedException e){
-
+                Log.d("SignalView", "surfaceDestroyed");
             }
         }
     }
 
     @Override
     public void onDraw(Canvas canvas){
+
         PlotPoints(canvas);
     }
 
-    public void set_data(int[] data1, int[] data2 ){
+    //public void set_data(int[] data1, int[] data2 ){
+    public void set_data(int[] data1){
 
         plot_thread.setRunning(false);
+        //Log.d("set_data","plot_thread_stop");
 
         for(int x=0; x<width; x++){
             // channel 1
             if(x<(data1.length)){
-                ch1_data[x] = height-data1[x]+1;
+                //ch1_data[x] = height-data1[x]+1;
+                    ch1_data[x] = ch1_pos + 120 - data1[x];
             }else{
-                ch1_data[x] = ch1_pos;
+                ch1_data[x] = ch1_pos + 120;
             }
-            // channel 2
-            if(x<(data1.length)){
-                ch2_data[x] = height-data2[x]+1;
-            }else{
-                ch2_data[x] = ch2_pos;
-            }
+//            // channel 2
+//            if(x<(data1.length)){
+//                ch2_data[x] = height-data2[x]+1;
+//            }else{
+//                ch2_data[x] = ch2_pos;
+//            }
         }
         plot_thread.setRunning(true);
+        //Log.d("set_data", "plot_thread_run");
     }
 
     public void PlotPoints(Canvas canvas){
@@ -146,7 +138,7 @@ public class SignalView extends SurfaceView implements SurfaceHolder.Callback{
 
         // plot data
         for(int x=0; x<(width-1); x++){
-            canvas.drawLine(x+1, ch2_data[x], x+2, ch2_data[x+1], ch2_color);
+            //canvas.drawLine(x+1, ch2_data[x], x+2, ch2_data[x+1], ch2_color);
             canvas.drawLine(x+1, ch1_data[x], x+2, ch1_data[x+1], ch1_color);
         }
     }

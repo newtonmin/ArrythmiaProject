@@ -10,10 +10,13 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -37,7 +40,7 @@ public class MainActivity extends ActionBarActivity {
     private static final int REQUEST_ENABLE_BT = 2;
 
     // bt-uart constants
-    private static final int MAX_SAMPLES = 120;
+    private static final int MAX_SAMPLES = 1080;
     private static final int  MAX_LEVEL	= 240;
     private static final int  DATA_START = (MAX_LEVEL + 1);
     private static final int  DATA_END = (MAX_LEVEL + 2);
@@ -53,8 +56,8 @@ public class MainActivity extends ActionBarActivity {
     // Run/Pause status
     private boolean bReady = false;
     // receive data
-    private int[] ch1_data = new int[MAX_SAMPLES/2];
-    private int[] ch2_data = new int[MAX_SAMPLES/2];
+    private int[] ch1_data = new int[MAX_SAMPLES];
+    //private int[] ch2_data = new int[MAX_SAMPLES/2];
     private int dataIndex=0, dataIndex1=0, dataIndex2=0;
     private boolean bDataAvailable=false;
 
@@ -87,14 +90,20 @@ public class MainActivity extends ActionBarActivity {
     private TextView debugMessages;
     private Button sendButton;
     private ToggleButton runButton;
+    private RadioGroup rbGroup;
+    private Button upButton;
+    private Button downButton;
+//    private RadioButton radioButtonRealTime;
+//    private RadioButton radioButtonAlert;
 
     // stay awake
     protected PowerManager.WakeLock mWakeLock;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_debug);
+        setContentView(R.layout.activity_main);
 
         // Get local Bluetooth adapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -110,6 +119,9 @@ public class MainActivity extends ActionBarActivity {
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         this.mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "My Tag");
         this.mWakeLock.acquire();
+        rbGroup = (RadioGroup) findViewById(R.id.radioGroup);
+//        radioButtonRealTime = (RadioButton) findViewById(R.id.rbRealtime);
+//        radioButtonAlert = (RadioButton) findViewById(R.id.rbAlert);
     }
 
     @Override
@@ -244,7 +256,8 @@ public class MainActivity extends ActionBarActivity {
         conStatus = (TextView) findViewById(R.id.tvConState);
         localAddress = (TextView) findViewById(R.id.localAddress);
         remoteAddress = (TextView)findViewById(R.id.remoteAddress);
-        debugMessages = (TextView)findViewById(R.id.tvDebug);
+
+//        debugMessages = (TextView)findViewById(R.id.tvDebug);
 
         // Send button
         sendButton = (Button)findViewById(R.id.bSend);
@@ -252,7 +265,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
 
-                sendMessage("Send");
+                sendMessage("r");
                 //sendMessage(new String(new byte[] {REQ_DATA}));
             }
         });
@@ -263,26 +276,62 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
 
-                debugMessages.setText("");
+                //debugMessages.setText("");
+                sendMessage("w");
             }
         });
 
-//        runButton = (ToggleButton) findViewById(R.id.btRun);
-//        runButton.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                if(runButton.isChecked())
-//                    bReady = true;
-//                else
-//                    bReady = false;
-//            }
-//        });
+        // Up button
+        upButton = (Button)findViewById(R.id.btUp);
+        upButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //debugMessages.setText("");
+                sendMessage("u");
+            }
+        });
+
+        // Down button
+        downButton = (Button)findViewById(R.id.btDown);
+        downButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //debugMessages.setText("");
+                sendMessage("d");
+            }
+        });
+
+        runButton = (ToggleButton) findViewById(R.id.btRun);
+        runButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                switch (rbGroup.getCheckedRadioButtonId())
+                {
+                    case R.id.rbAlert:
+                        if (runButton.isChecked()) {
+                            sendMessage("R");
+                            bReady = true;
+                        } else
+                            bReady = false;
+                        break;
+                    case R.id.rbRealtime:
+                        if (runButton.isChecked()) {
+                            sendMessage("r");
+                            bReady = true;
+                        } else
+                            bReady = false;
+                        break;
+                }
+            }
+        });
 
         // Initialize the BluetoothRfcommClient to perform bluetooth connections
         mRfcommClient = new BluetoothRfCommClient(this, mHandler);
 
         // waveform / plot area
-        //mWaveform = (SignalView)findViewById(R.id.signalViewArea);
+        mWaveform = (SignalView)findViewById(R.id.signalViewArea);
     }
 
     // The Handler that gets information back from the BluetoothRfcommClient
@@ -296,47 +345,53 @@ public class MainActivity extends ActionBarActivity {
                             conStatus.setText("Connected");
                             remoteAddress.setText(mConnectedAddress);
                             localAddress.setText(mBluetoothAdapter.getAddress());
-                            debugMessages.append("\n" + mConnectedDeviceName + "Connected");
+                            //debugMessages.append("\n" + mConnectedDeviceName + "Connected");
                             break;
                         case BluetoothRfCommClient.STATE_CONNECTING:
-                            debugMessages.append("\n" + "Connecting...");
+                            //debugMessages.append("\n" + "Connecting...");
                             break;
                         case BluetoothRfCommClient.STATE_NONE:
                             conStatus.setText("Not Connected");
                             remoteAddress.setText("");
                             localAddress.setText("");
-                            debugMessages.append("\n" + "Disconnected");
+                            //debugMessages.append("\n" + "Disconnected");
                             break;
                     }
                     break;
                 case MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
-//                    int data_length = msg.arg1;
-//                    for(int x=0; x<data_length; x++){
-//                        int raw = UByte(readBuf[x]);
-//                        if( raw>MAX_LEVEL ){
-//                            if( raw==DATA_START ){
-//                                bDataAvailable = true;
-//                                dataIndex = 0; dataIndex1=0; dataIndex2=0;
-//                            }
-//                            else if( (raw==DATA_END) || (dataIndex>=MAX_SAMPLES) ){
-//                                bDataAvailable = false;
-//                                dataIndex = 0; dataIndex1=0; dataIndex2=0;
-//                                mWaveform.set_data(ch1_data, ch2_data);
-//                                if(bReady){ // send "REQ_DATA" again
-//                                    MainActivity.this.sendMessage( new String(new byte[] {REQ_DATA}) );
-//                                }
-//                                //break;
-//                            }
-//                        }
-//                        else if( (bDataAvailable) && (dataIndex<(MAX_SAMPLES)) ){ // valid data
-////                            if((dataIndex++)%2==0) ch1_data[dataIndex1++] = raw;	// even data
-////                            else ch2_data[dataIndex2++] = raw;	// odd data
-//                            ch1_data[dataIndex1++] = raw;
-//                        }
-//                    }
-                    String strIncom = new String(readBuf, 0, msg.arg1);                 // create string from bytes array
-                    debugMessages.append(strIncom);                                     // append string
+                    int data_length = msg.arg1;
+                    for(int x=0; x<data_length; x++){
+                        int raw = UByte(readBuf[x]);
+                        if( raw>MAX_LEVEL ){
+                            if( raw==DATA_START ){
+                                bDataAvailable = true;
+                                dataIndex = 0; dataIndex1=0; dataIndex2=0;
+                            }
+                            else if( (raw==DATA_END) || (dataIndex>=MAX_SAMPLES) ){
+                                bDataAvailable = false;
+                                dataIndex = 0; dataIndex1=0; dataIndex2=0;
+                                mWaveform.set_data(ch1_data);
+                                if(bReady){ // send "REQ_DATA" again
+                                    //MainActivity.this.sendMessage( new String(new byte[] {REQ_DATA}) );
+                                    MainActivity.this.sendMessage("r");
+                                }
+                                //break;
+                            }
+                        }
+                        else if( (bDataAvailable) && (dataIndex<MAX_SAMPLES) ){ // valid data
+//                            if((dataIndex++)%2==0) ch1_data[dataIndex1++] = raw;	// even data
+//                            else ch2_data[dataIndex2++] = raw;	// odd data
+                            ch1_data[dataIndex1++] = raw;
+                            //Log.d("Main", String.valueOf(dataIndex1));
+                        }
+                        else{
+                            bDataAvailable = true;
+                            dataIndex = 0; dataIndex1=0; dataIndex2=0;
+                        }
+                    }
+//                    String strIncom = new String(readBuf, 0, msg.arg1);                 // create string from bytes array
+//                    debugMessages.append(strIncom);                                     // append string
 //                    int endOfLineIndex = sb.indexOf("\r\n");                            // determine the end-of-line
 //                    if (endOfLineIndex > 0) {                                            // if end-of-line,
 //                        String sbprint = sb.substring(0, endOfLineIndex);               // extract string

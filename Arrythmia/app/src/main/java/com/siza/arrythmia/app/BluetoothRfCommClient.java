@@ -260,13 +260,14 @@ public class BluetoothRfCommClient {
         }
 
         public void run() {
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[512];
             int bytes;
             // Keep listening to the InputStream while connected
             while (true) {
                 try {
                     // Read from the InputStream
                     bytes = mmInStream.read(buffer);
+                    Log.d("BluetoothRfCommClient", String.valueOf(bytes));
                     // Send the obtained bytes to the UI Activity
                     mHandler.obtainMessage(MainActivity.MESSAGE_READ, bytes, -1, buffer)
                             .sendToTarget();

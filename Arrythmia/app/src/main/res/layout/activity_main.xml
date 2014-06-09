@@ -1,0 +1,155 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.siza.arrythmia.app.MainActivity">
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Not Connected"
+        android:id="@+id/tvConState"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="false"
+        android:layout_gravity="right" />
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/remoteAddress"
+        android:layout_gravity="right"
+        android:layout_below="@+id/lblRemoteAddress"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Remote Address"
+        android:id="@+id/lblRemoteAddress"
+        android:layout_gravity="right"
+        android:layout_below="@+id/tvConState"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Send"
+        android:id="@+id/bSend"
+        android:layout_above="@+id/bClear"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Signal"
+        android:id="@+id/bClear"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Local Address"
+        android:id="@+id/lblLocalAddress"
+        android:layout_gravity="right"
+        android:layout_below="@+id/remoteAddress"
+        android:layout_alignRight="@+id/remoteAddress"
+        android:layout_alignEnd="@+id/remoteAddress" />
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/localAddress"
+        android:layout_gravity="right"
+        android:layout_below="@+id/lblLocalAddress"
+        android:layout_alignRight="@+id/lblLocalAddress"
+        android:layout_alignEnd="@+id/lblLocalAddress" />
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btRun"
+        android:layout_above="@+id/bSend"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textOn="Stop"
+        android:textOff="Run"
+        android:layout_toRightOf="@+id/signalViewArea" />
+
+    <view
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.siza.arrythmia.app.SignalView"
+        android:id="@+id/signalViewArea"
+        android:layout_toLeftOf="@+id/tvConState"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Down"
+        android:id="@+id/btDown"
+        android:layout_above="@+id/btRun"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/signalViewArea" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Up"
+        android:id="@+id/btUp"
+        android:layout_above="@+id/btDown"
+        android:layout_alignRight="@+id/btRun"
+        android:layout_alignEnd="@+id/btRun"
+        android:layout_toRightOf="@+id/signalViewArea" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroup"
+        android:layout_above="@+id/btUp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/signalViewArea">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alert"
+            android:id="@+id/rbAlert"
+            android:layout_above="@+id/btUp"
+            android:layout_alignLeft="@+id/btUp"
+            android:layout_alignStart="@+id/btUp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Real-Time"
+            android:id="@+id/rbRealtime"
+            android:longClickable="true"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/bSend"
+            android:checked="true" />
+
+    </RadioGroup>
+
+</RelativeLayout>

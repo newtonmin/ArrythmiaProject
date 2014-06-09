@@ -4,6 +4,7 @@ package com.siza.arrythmia.app;
  * Created by Siza on 6/2/2014.
  */
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class SignalPlotThread extends Thread {
@@ -26,9 +27,12 @@ public class SignalPlotThread extends Thread {
             c = null;
             try{
                 c = holder.lockCanvas(null);
+                //Log.d("SignalPlotThread", "lockCanvas");
                 synchronized (holder) {
                     plot_area.PlotPoints(c);
                 }
+            }catch(Exception exp){
+                Log.d("SignalPlotThread", exp.toString());
             }finally{
                 if(c!=null){
                     holder.unlockCanvasAndPost(c);

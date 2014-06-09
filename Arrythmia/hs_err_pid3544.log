@@ -15,7 +15,7 @@
 #   Set larger code cache with -XX:ReservedCodeCacheSize=
 # This output file may be truncated or incomplete.
 #
-#  Out of Memory Error (memory/allocation.inline.hpp:62), pid=7780, tid=16924
+#  Out of Memory Error (memory/allocation.inline.hpp:62), pid=3544, tid=13804
 #
 # JRE version:  (8.0_05-b13) (build )
 # Java VM: Java HotSpot(TM) 64-Bit Server VM (25.5-b02 mixed mode windows-amd64 compressed oops)
@@ -24,11 +24,9 @@
 
 ---------------  T H R E A D  ---------------
 
-Current thread (0x000000000223e800):  JavaThread "Unknown thread" [_thread_in_vm, id=16924, stack(0x0000000002520000,0x0000000002620000)]
+Current thread (0x00000000020f0000):  JavaThread "Unknown thread" [_thread_in_vm, id=13804, stack(0x0000000002320000,0x0000000002420000)]
 
-Stack: [0x0000000002520000,0x0000000002620000]
-[error occurred during error reporting (printing stack bounds), id 0xc0000005]
-
+Stack: [0x0000000002320000,0x0000000002420000]
 Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
 V  [jvm.dll+0x308dea]
 
@@ -39,7 +37,7 @@ Java Threads: ( => current thread )
 
 Other Threads:
 
-=>0x000000000223e800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=16924, stack(0x0000000002520000,0x0000000002620000)]
+=>0x00000000020f0000 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=13804, stack(0x0000000002320000,0x0000000002420000)]
 
 VM state:not at safepoint (normal execution)
 
@@ -55,16 +53,16 @@ Heap:
  Metaspace       used 673K, capacity 4480K, committed 4480K, reserved 1056768K
   class space    used 66K, capacity 384K, committed 384K, reserved 1048576K
 
-Card table byte_map: [0x0000000011cb0000,0x00000000120c0000] byte_map_base: 0x00000000118b0000
+Card table byte_map: [0x0000000011ab0000,0x0000000011ec0000] byte_map_base: 0x00000000116b0000
 
-Marking Bits: (ParMarkBitMap*) 0x00000000661413b0
- Begin Bits: [0x0000000012b30000, 0x0000000014b30000)
- End Bits:   [0x0000000014b30000, 0x0000000016b30000)
+Marking Bits: (ParMarkBitMap*) 0x00000000660313b0
+ Begin Bits: [0x0000000012bb0000, 0x0000000014bb0000)
+ End Bits:   [0x0000000014bb0000, 0x0000000016bb0000)
 
-Polling page: 0x0000000000230000
+Polling page: 0x0000000000330000
 
 CodeCache: size=245760Kb used=326Kb max_used=326Kb free=245433Kb
- bounds [0x00000000028f0000, 0x0000000002b60000, 0x00000000118f0000]
+ bounds [0x00000000026f0000, 0x0000000002960000, 0x00000000116f0000]
  total_blobs=55 nmethods=0 adapters=37
  compilation: enabled
 
@@ -81,20 +79,20 @@ Internal exceptions (0 events):
 No events
 
 Events (10 events):
-Event: 0.120 loading class java/lang/Short
-Event: 0.120 loading class java/lang/Short done
-Event: 0.120 loading class java/lang/Integer
-Event: 0.120 loading class java/lang/Integer done
-Event: 0.120 loading class java/lang/Long
-Event: 0.121 loading class java/lang/Long done
-Event: 0.121 loading class java/lang/NullPointerException
-Event: 0.121 loading class java/lang/NullPointerException done
-Event: 0.121 loading class java/lang/ArithmeticException
-Event: 0.121 loading class java/lang/ArithmeticException done
+Event: 0.030 loading class java/lang/Short
+Event: 0.030 loading class java/lang/Short done
+Event: 0.030 loading class java/lang/Integer
+Event: 0.030 loading class java/lang/Integer done
+Event: 0.030 loading class java/lang/Long
+Event: 0.030 loading class java/lang/Long done
+Event: 0.031 loading class java/lang/NullPointerException
+Event: 0.031 loading class java/lang/NullPointerException done
+Event: 0.031 loading class java/lang/ArithmeticException
+Event: 0.031 loading class java/lang/ArithmeticException done
 
 
 Dynamic libraries:
-0x000000013fcc0000 - 0x000000013fcf4000 	C:\Program Files\Java\jdk1.8.0_05\bin\java.exe
+0x000000013f090000 - 0x000000013f0c4000 	C:\Program Files\Java\jdk1.8.0_05\bin\java.exe
 0x0000000076ed0000 - 0x0000000077079000 	C:\Windows\SYSTEM32\ntdll.dll
 0x0000000076cb0000 - 0x0000000076dcf000 	C:\Windows\system32\kernel32.dll
 0x000007fefcfe0000 - 0x000007fefd04c000 	C:\Windows\system32\KERNELBASE.dll
@@ -110,16 +108,16 @@ Dynamic libraries:
 0x000007fefef90000 - 0x000007feff001000 	C:\Windows\system32\SHLWAPI.dll
 0x000007fefede0000 - 0x000007fefee0e000 	C:\Windows\system32\IMM32.DLL
 0x000007fefe6a0000 - 0x000007fefe7a9000 	C:\Windows\system32\MSCTF.dll
-0x000000006d9a0000 - 0x000000006da72000 	C:\Program Files\Java\jdk1.8.0_05\jre\bin\msvcr100.dll
-0x0000000065990000 - 0x00000000661ba000 	C:\Program Files\Java\jdk1.8.0_05\jre\bin\server\jvm.dll
+0x000000006d390000 - 0x000000006d462000 	C:\Program Files\Java\jdk1.8.0_05\jre\bin\msvcr100.dll
+0x0000000065880000 - 0x00000000660aa000 	C:\Program Files\Java\jdk1.8.0_05\jre\bin\server\jvm.dll
 0x000007fef6b10000 - 0x000007fef6b19000 	C:\Windows\system32\WSOCK32.dll
 0x000007fefd860000 - 0x000007fefd8ad000 	C:\Windows\system32\WS2_32.dll
 0x000007feff1d0000 - 0x000007feff1d8000 	C:\Windows\system32\NSI.dll
 0x000007fefa8c0000 - 0x000007fefa8fb000 	C:\Windows\system32\WINMM.dll
 0x00000000770a0000 - 0x00000000770a7000 	C:\Windows\system32\PSAPI.DLL
-0x000000006fea0000 - 0x000000006feaf000 	C:\Program Files\Java\jdk1.8.0_05\jre\bin\verify.dll
-0x000000006e210000 - 0x000000006e238000 	C:\Program Files\Java\jdk1.8.0_05\jre\bin\java.dll
-0x000000006f330000 - 0x000000006f346000 	C:\Program Files\Java\jdk1.8.0_05\jre\bin\zip.dll
+0x0000000070310000 - 0x000000007031f000 	C:\Program Files\Java\jdk1.8.0_05\jre\bin\verify.dll
+0x0000000070160000 - 0x0000000070188000 	C:\Program Files\Java\jdk1.8.0_05\jre\bin\java.dll
+0x000000006ff90000 - 0x000000006ffa6000 	C:\Program Files\Java\jdk1.8.0_05\jre\bin\zip.dll
 0x000007fefaa00000 - 0x000007fefab25000 	C:\Windows\system32\dbghelp.dll
 
 VM Arguments:
@@ -142,10 +140,10 @@ OS: Windows 7 , 64 bit Build 7601 Service Pack 1
 
 CPU:total 6 (6 cores per cpu, 1 threads per core) family 16 model 10 stepping 0, cmov, cx8, fxsr, mmx, sse, sse2, sse3, popcnt, mmxext, 3dnowpref, lzcnt, sse4a, tsc, tscinvbit
 
-Memory: 4k page, physical 8387816k(1500848k free), swap 8385952k(5124k free)
+Memory: 4k page, physical 8387816k(1080348k free), swap 8385952k(5124k free)
 
 vm_info: Java HotSpot(TM) 64-Bit Server VM (25.5-b02) for windows-amd64 JRE (1.8.0_05-b13), built on Mar 18 2014 01:08:39 by "java_re" with MS VC++ 10.0 (VS2010)
 
-time: Sat Jun 07 19:02:40 2014
+time: Tue Jun 10 00:21:24 2014
 elapsed time: 0 seconds
 

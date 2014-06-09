@@ -1,6 +1,6 @@
 #
 # There is insufficient memory for the Java Runtime Environment to continue.
-# Native memory allocation (malloc) failed to allocate 1048576 bytes for AllocateHeap
+# Native memory allocation (malloc) failed to allocate 8192 bytes for AllocateHeap
 # Possible reasons:
 #   The system is out of physical RAM or swap space
 #   In 32 bit mode, the process size limit was hit
@@ -15,7 +15,7 @@
 #   Set larger code cache with -XX:ReservedCodeCacheSize=
 # This output file may be truncated or incomplete.
 #
-#  Out of Memory Error (memory/allocation.inline.hpp:62), pid=7780, tid=16924
+#  Out of Memory Error (memory/allocation.inline.hpp:62), pid=15796, tid=17604
 #
 # JRE version:  (8.0_05-b13) (build )
 # Java VM: Java HotSpot(TM) 64-Bit Server VM (25.5-b02 mixed mode windows-amd64 compressed oops)
@@ -24,48 +24,59 @@
 
 ---------------  T H R E A D  ---------------
 
-Current thread (0x000000000223e800):  JavaThread "Unknown thread" [_thread_in_vm, id=16924, stack(0x0000000002520000,0x0000000002620000)]
+Current thread (0x00000000021fe800):  JavaThread "main" [_thread_in_vm, id=17604, stack(0x0000000002530000,0x0000000002630000)]
 
-Stack: [0x0000000002520000,0x0000000002620000]
-[error occurred during error reporting (printing stack bounds), id 0xc0000005]
-
+Stack: [0x0000000002530000,0x0000000002630000]
 Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
 V  [jvm.dll+0x308dea]
 
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+j  java.nio.charset.Charset.<clinit>()V+4
+v  ~StubRoutines::call_stub
+j  sun.nio.cs.StreamEncoder.forOutputStreamWriter(Ljava/io/OutputStream;Ljava/lang/Object;Ljava/lang/String;)Lsun/nio/cs/StreamEncoder;+6
+j  java.io.OutputStreamWriter.<init>(Ljava/io/OutputStream;)V+12
+j  java.io.PrintStream.<init>(ZLjava/io/OutputStream;)V+26
+j  java.io.PrintStream.<init>(Ljava/io/OutputStream;Z)V+11
+j  java.lang.System.newPrintStream(Ljava/io/FileOutputStream;Ljava/lang/String;)Ljava/io/PrintStream;+42
+j  java.lang.System.initializeSystemClass()V+90
+v  ~StubRoutines::call_stub
 
 ---------------  P R O C E S S  ---------------
 
 Java Threads: ( => current thread )
+  0x000000001774d800 JavaThread "Finalizer" daemon [_thread_blocked, id=10860, stack(0x0000000019210000,0x0000000019310000)]
+  0x0000000017744800 JavaThread "Reference Handler" daemon [_thread_blocked, id=10848, stack(0x0000000018ff0000,0x00000000190f0000)]
+=>0x00000000021fe800 JavaThread "main" [_thread_in_vm, id=17604, stack(0x0000000002530000,0x0000000002630000)]
 
 Other Threads:
-
-=>0x000000000223e800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=16924, stack(0x0000000002520000,0x0000000002620000)]
+  0x0000000017740800 VMThread [stack: 0x0000000018eb0000,0x0000000018fb0000] [id=15980]
 
 VM state:not at safepoint (normal execution)
 
-VM Mutex/Monitor currently owned by a thread: None
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x00000000021fc3a0] SymbolTable_lock - owner thread: 0x00000000021fe800
 
 Heap:
- PSYoungGen      total 1024K, used 20K [0x00000000d5580000, 0x00000000d5700000, 0x0000000100000000)
-  eden space 512K, 4% used [0x00000000d5580000,0x00000000d5585288,0x00000000d5600000)
+ PSYoungGen      total 1024K, used 93K [0x00000000d5580000, 0x00000000d5700000, 0x0000000100000000)
+  eden space 512K, 18% used [0x00000000d5580000,0x00000000d5597440,0x00000000d5600000)
   from space 512K, 0% used [0x00000000d5680000,0x00000000d5680000,0x00000000d5700000)
   to   space 512K, 0% used [0x00000000d5600000,0x00000000d5600000,0x00000000d5680000)
  ParOldGen       total 129536K, used 0K [0x0000000080000000, 0x0000000087e80000, 0x00000000d5580000)
   object space 129536K, 0% used [0x0000000080000000,0x0000000080000000,0x0000000087e80000)
- Metaspace       used 673K, capacity 4480K, committed 4480K, reserved 1056768K
-  class space    used 66K, capacity 384K, committed 384K, reserved 1048576K
+ Metaspace       used 1182K, capacity 4480K, committed 4480K, reserved 1056768K
+  class space    used 135K, capacity 384K, committed 384K, reserved 1048576K
 
-Card table byte_map: [0x0000000011cb0000,0x00000000120c0000] byte_map_base: 0x00000000118b0000
+Card table byte_map: [0x0000000011cc0000,0x00000000120d0000] byte_map_base: 0x00000000118c0000
 
-Marking Bits: (ParMarkBitMap*) 0x00000000661413b0
- Begin Bits: [0x0000000012b30000, 0x0000000014b30000)
- End Bits:   [0x0000000014b30000, 0x0000000016b30000)
+Marking Bits: (ParMarkBitMap*) 0x00000000519313b0
+ Begin Bits: [0x0000000012960000, 0x0000000014960000)
+ End Bits:   [0x0000000014960000, 0x0000000016960000)
 
-Polling page: 0x0000000000230000
+Polling page: 0x0000000000430000
 
-CodeCache: size=245760Kb used=326Kb max_used=326Kb free=245433Kb
- bounds [0x00000000028f0000, 0x0000000002b60000, 0x00000000118f0000]
- total_blobs=55 nmethods=0 adapters=37
+CodeCache: size=245760Kb used=403Kb max_used=403Kb free=245356Kb
+ bounds [0x0000000002900000, 0x0000000002b70000, 0x0000000011900000]
+ total_blobs=102 nmethods=0 adapters=78
  compilation: enabled
 
 Compilation events (0 events):
@@ -77,24 +88,25 @@ No events
 Deoptimization events (0 events):
 No events
 
-Internal exceptions (0 events):
-No events
+Internal exceptions (2 events):
+Event: 0.973 Thread 0x00000000021fe800 Exception <a 'java/lang/NoSuchMethodError': Method sun.misc.Unsafe.defineClass(Ljava/lang/String;[BII)Ljava/lang/Class; name or signature does not match> (0x00000000d558f580) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u5\2488\hotspot\srct*f½%ï?
+Event: 0.973 Thread 0x00000000021fe800 Exception <a 'java/lang/NoSuchMethodError': Method sun.misc.Unsafe.prefetchRead(Ljava/lang/Object;J)V name or signature does not match> (0x00000000d558f878) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u5\2488\hotspot\src\share\vm\prims\jn
 
 Events (10 events):
-Event: 0.120 loading class java/lang/Short
-Event: 0.120 loading class java/lang/Short done
-Event: 0.120 loading class java/lang/Integer
-Event: 0.120 loading class java/lang/Integer done
-Event: 0.120 loading class java/lang/Long
-Event: 0.121 loading class java/lang/Long done
-Event: 0.121 loading class java/lang/NullPointerException
-Event: 0.121 loading class java/lang/NullPointerException done
-Event: 0.121 loading class java/lang/ArithmeticException
-Event: 0.121 loading class java/lang/ArithmeticException done
+Event: 1.003 loading class java/io/BufferedOutputStream done
+Event: 1.003 loading class java/io/OutputStreamWriter
+Event: 1.003 loading class java/io/Writer
+Event: 1.003 loading class java/io/Writer done
+Event: 1.003 loading class java/io/OutputStreamWriter done
+Event: 1.003 loading class sun/nio/cs/StreamEncoder
+Event: 1.003 loading class sun/nio/cs/StreamEncoder done
+Event: 1.003 loading class java/nio/charset/Charset
+Event: 1.004 loading class java/nio/charset/Charset done
+Event: 1.004 loading class sun/nio/cs/StandardCharsets
 
 
 Dynamic libraries:
-0x000000013fcc0000 - 0x000000013fcf4000 	C:\Program Files\Java\jdk1.8.0_05\bin\java.exe
+0x000000013f470000 - 0x000000013f4a4000 	C:\Windows\system32\java.exe
 0x0000000076ed0000 - 0x0000000077079000 	C:\Windows\SYSTEM32\ntdll.dll
 0x0000000076cb0000 - 0x0000000076dcf000 	C:\Windows\system32\kernel32.dll
 0x000007fefcfe0000 - 0x000007fefd04c000 	C:\Windows\system32\KERNELBASE.dll
@@ -110,17 +122,19 @@ Dynamic libraries:
 0x000007fefef90000 - 0x000007feff001000 	C:\Windows\system32\SHLWAPI.dll
 0x000007fefede0000 - 0x000007fefee0e000 	C:\Windows\system32\IMM32.DLL
 0x000007fefe6a0000 - 0x000007fefe7a9000 	C:\Windows\system32\MSCTF.dll
-0x000000006d9a0000 - 0x000000006da72000 	C:\Program Files\Java\jdk1.8.0_05\jre\bin\msvcr100.dll
-0x0000000065990000 - 0x00000000661ba000 	C:\Program Files\Java\jdk1.8.0_05\jre\bin\server\jvm.dll
+0x000000006d390000 - 0x000000006d462000 	C:\Program Files\Java\jre8\bin\msvcr100.dll
+0x0000000051180000 - 0x00000000519aa000 	C:\Program Files\Java\jre8\bin\server\jvm.dll
 0x000007fef6b10000 - 0x000007fef6b19000 	C:\Windows\system32\WSOCK32.dll
 0x000007fefd860000 - 0x000007fefd8ad000 	C:\Windows\system32\WS2_32.dll
 0x000007feff1d0000 - 0x000007feff1d8000 	C:\Windows\system32\NSI.dll
 0x000007fefa8c0000 - 0x000007fefa8fb000 	C:\Windows\system32\WINMM.dll
 0x00000000770a0000 - 0x00000000770a7000 	C:\Windows\system32\PSAPI.DLL
-0x000000006fea0000 - 0x000000006feaf000 	C:\Program Files\Java\jdk1.8.0_05\jre\bin\verify.dll
-0x000000006e210000 - 0x000000006e238000 	C:\Program Files\Java\jdk1.8.0_05\jre\bin\java.dll
-0x000000006f330000 - 0x000000006f346000 	C:\Program Files\Java\jdk1.8.0_05\jre\bin\zip.dll
-0x000007fefaa00000 - 0x000007fefab25000 	C:\Windows\system32\dbghelp.dll
+0x000000006de50000 - 0x000000006de5f000 	C:\Program Files\Java\jre8\bin\verify.dll
+0x000000006dc30000 - 0x000000006dc58000 	C:\Program Files\Java\jre8\bin\java.dll
+0x000000006de30000 - 0x000000006de46000 	C:\Program Files\Java\jre8\bin\zip.dll
+0x000007fefd910000 - 0x000007fefe698000 	C:\Windows\system32\SHELL32.dll
+0x000007fefe7b0000 - 0x000007fefe9b3000 	C:\Windows\system32\ole32.dll
+0x000007fefcc90000 - 0x000007fefcc9f000 	C:\Windows\system32\profapi.dll
 
 VM Arguments:
 java_command: <unknown>
@@ -142,10 +156,10 @@ OS: Windows 7 , 64 bit Build 7601 Service Pack 1
 
 CPU:total 6 (6 cores per cpu, 1 threads per core) family 16 model 10 stepping 0, cmov, cx8, fxsr, mmx, sse, sse2, sse3, popcnt, mmxext, 3dnowpref, lzcnt, sse4a, tsc, tscinvbit
 
-Memory: 4k page, physical 8387816k(1500848k free), swap 8385952k(5124k free)
+Memory: 4k page, physical 8387816k(1328432k free), swap 8385952k(5216k free)
 
 vm_info: Java HotSpot(TM) 64-Bit Server VM (25.5-b02) for windows-amd64 JRE (1.8.0_05-b13), built on Mar 18 2014 01:08:39 by "java_re" with MS VC++ 10.0 (VS2010)
 
-time: Sat Jun 07 19:02:40 2014
-elapsed time: 0 seconds
+time: Mon Jun 09 03:17:52 2014
+elapsed time: 1 seconds
 

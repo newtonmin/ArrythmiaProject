@@ -15,7 +15,7 @@
 #   Set larger code cache with -XX:ReservedCodeCacheSize=
 # This output file may be truncated or incomplete.
 #
-#  Out of Memory Error (memory/allocation.inline.hpp:62), pid=7780, tid=16924
+#  Out of Memory Error (memory/allocation.inline.hpp:62), pid=17012, tid=7208
 #
 # JRE version:  (8.0_05-b13) (build )
 # Java VM: Java HotSpot(TM) 64-Bit Server VM (25.5-b02 mixed mode windows-amd64 compressed oops)
@@ -24,9 +24,9 @@
 
 ---------------  T H R E A D  ---------------
 
-Current thread (0x000000000223e800):  JavaThread "Unknown thread" [_thread_in_vm, id=16924, stack(0x0000000002520000,0x0000000002620000)]
+Current thread (0x00000000002ce800):  JavaThread "Unknown thread" [_thread_in_vm, id=7208, stack(0x0000000002220000,0x0000000002320000)]
 
-Stack: [0x0000000002520000,0x0000000002620000]
+Stack: [0x0000000002220000,0x0000000002320000]
 [error occurred during error reporting (printing stack bounds), id 0xc0000005]
 
 Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
@@ -39,7 +39,7 @@ Java Threads: ( => current thread )
 
 Other Threads:
 
-=>0x000000000223e800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=16924, stack(0x0000000002520000,0x0000000002620000)]
+=>0x00000000002ce800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=7208, stack(0x0000000002220000,0x0000000002320000)]
 
 VM state:not at safepoint (normal execution)
 
@@ -55,16 +55,16 @@ Heap:
  Metaspace       used 673K, capacity 4480K, committed 4480K, reserved 1056768K
   class space    used 66K, capacity 384K, committed 384K, reserved 1048576K
 
-Card table byte_map: [0x0000000011cb0000,0x00000000120c0000] byte_map_base: 0x00000000118b0000
+Card table byte_map: [0x0000000011a30000,0x0000000011e40000] byte_map_base: 0x0000000011630000
 
 Marking Bits: (ParMarkBitMap*) 0x00000000661413b0
- Begin Bits: [0x0000000012b30000, 0x0000000014b30000)
- End Bits:   [0x0000000014b30000, 0x0000000016b30000)
+ Begin Bits: [0x00000000129d0000, 0x00000000149d0000)
+ End Bits:   [0x00000000149d0000, 0x00000000169d0000)
 
-Polling page: 0x0000000000230000
+Polling page: 0x0000000000240000
 
 CodeCache: size=245760Kb used=326Kb max_used=326Kb free=245433Kb
- bounds [0x00000000028f0000, 0x0000000002b60000, 0x00000000118f0000]
+ bounds [0x0000000002670000, 0x00000000028e0000, 0x0000000011670000]
  total_blobs=55 nmethods=0 adapters=37
  compilation: enabled
 

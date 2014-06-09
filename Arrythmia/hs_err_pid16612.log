@@ -15,7 +15,7 @@
 #   Set larger code cache with -XX:ReservedCodeCacheSize=
 # This output file may be truncated or incomplete.
 #
-#  Out of Memory Error (memory/allocation.inline.hpp:62), pid=7780, tid=16924
+#  Out of Memory Error (memory/allocation.inline.hpp:62), pid=16612, tid=9736
 #
 # JRE version:  (8.0_05-b13) (build )
 # Java VM: Java HotSpot(TM) 64-Bit Server VM (25.5-b02 mixed mode windows-amd64 compressed oops)
@@ -24,11 +24,9 @@
 
 ---------------  T H R E A D  ---------------
 
-Current thread (0x000000000223e800):  JavaThread "Unknown thread" [_thread_in_vm, id=16924, stack(0x0000000002520000,0x0000000002620000)]
+Current thread (0x00000000003ce800):  JavaThread "Unknown thread" [_thread_in_vm, id=9736, stack(0x0000000002460000,0x0000000002560000)]
 
-Stack: [0x0000000002520000,0x0000000002620000]
-[error occurred during error reporting (printing stack bounds), id 0xc0000005]
-
+Stack: [0x0000000002460000,0x0000000002560000]
 Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
 V  [jvm.dll+0x308dea]
 
@@ -39,7 +37,7 @@ Java Threads: ( => current thread )
 
 Other Threads:
 
-=>0x000000000223e800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=16924, stack(0x0000000002520000,0x0000000002620000)]
+=>0x00000000003ce800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=9736, stack(0x0000000002460000,0x0000000002560000)]
 
 VM state:not at safepoint (normal execution)
 
@@ -55,16 +53,16 @@ Heap:
  Metaspace       used 673K, capacity 4480K, committed 4480K, reserved 1056768K
   class space    used 66K, capacity 384K, committed 384K, reserved 1048576K
 
-Card table byte_map: [0x0000000011cb0000,0x00000000120c0000] byte_map_base: 0x00000000118b0000
+Card table byte_map: [0x0000000011bf0000,0x0000000012000000] byte_map_base: 0x00000000117f0000
 
 Marking Bits: (ParMarkBitMap*) 0x00000000661413b0
- Begin Bits: [0x0000000012b30000, 0x0000000014b30000)
- End Bits:   [0x0000000014b30000, 0x0000000016b30000)
+ Begin Bits: [0x0000000012be0000, 0x0000000014be0000)
+ End Bits:   [0x0000000014be0000, 0x0000000016be0000)
 
-Polling page: 0x0000000000230000
+Polling page: 0x0000000000330000
 
 CodeCache: size=245760Kb used=326Kb max_used=326Kb free=245433Kb
- bounds [0x00000000028f0000, 0x0000000002b60000, 0x00000000118f0000]
+ bounds [0x0000000002830000, 0x0000000002aa0000, 0x0000000011830000]
  total_blobs=55 nmethods=0 adapters=37
  compilation: enabled
 
@@ -81,20 +79,20 @@ Internal exceptions (0 events):
 No events
 
 Events (10 events):
-Event: 0.120 loading class java/lang/Short
-Event: 0.120 loading class java/lang/Short done
-Event: 0.120 loading class java/lang/Integer
-Event: 0.120 loading class java/lang/Integer done
-Event: 0.120 loading class java/lang/Long
-Event: 0.121 loading class java/lang/Long done
-Event: 0.121 loading class java/lang/NullPointerException
-Event: 0.121 loading class java/lang/NullPointerException done
-Event: 0.121 loading class java/lang/ArithmeticException
-Event: 0.121 loading class java/lang/ArithmeticException done
+Event: 0.266 loading class java/lang/Short
+Event: 0.266 loading class java/lang/Short done
+Event: 0.266 loading class java/lang/Integer
+Event: 0.266 loading class java/lang/Integer done
+Event: 0.266 loading class java/lang/Long
+Event: 0.267 loading class java/lang/Long done
+Event: 0.268 loading class java/lang/NullPointerException
+Event: 0.268 loading class java/lang/NullPointerException done
+Event: 0.268 loading class java/lang/ArithmeticException
+Event: 0.268 loading class java/lang/ArithmeticException done
 
 
 Dynamic libraries:
-0x000000013fcc0000 - 0x000000013fcf4000 	C:\Program Files\Java\jdk1.8.0_05\bin\java.exe
+0x000000013f0a0000 - 0x000000013f0d4000 	C:\Program Files\Java\jdk1.8.0_05\bin\java.exe
 0x0000000076ed0000 - 0x0000000077079000 	C:\Windows\SYSTEM32\ntdll.dll
 0x0000000076cb0000 - 0x0000000076dcf000 	C:\Windows\system32\kernel32.dll
 0x000007fefcfe0000 - 0x000007fefd04c000 	C:\Windows\system32\KERNELBASE.dll
@@ -118,7 +116,7 @@ Dynamic libraries:
 0x000007fefa8c0000 - 0x000007fefa8fb000 	C:\Windows\system32\WINMM.dll
 0x00000000770a0000 - 0x00000000770a7000 	C:\Windows\system32\PSAPI.DLL
 0x000000006fea0000 - 0x000000006feaf000 	C:\Program Files\Java\jdk1.8.0_05\jre\bin\verify.dll
-0x000000006e210000 - 0x000000006e238000 	C:\Program Files\Java\jdk1.8.0_05\jre\bin\java.dll
+0x000000006d470000 - 0x000000006d498000 	C:\Program Files\Java\jdk1.8.0_05\jre\bin\java.dll
 0x000000006f330000 - 0x000000006f346000 	C:\Program Files\Java\jdk1.8.0_05\jre\bin\zip.dll
 0x000007fefaa00000 - 0x000007fefab25000 	C:\Windows\system32\dbghelp.dll
 
@@ -142,10 +140,10 @@ OS: Windows 7 , 64 bit Build 7601 Service Pack 1
 
 CPU:total 6 (6 cores per cpu, 1 threads per core) family 16 model 10 stepping 0, cmov, cx8, fxsr, mmx, sse, sse2, sse3, popcnt, mmxext, 3dnowpref, lzcnt, sse4a, tsc, tscinvbit
 
-Memory: 4k page, physical 8387816k(1500848k free), swap 8385952k(5124k free)
+Memory: 4k page, physical 8387816k(1514768k free), swap 8385952k(5096k free)
 
 vm_info: Java HotSpot(TM) 64-Bit Server VM (25.5-b02) for windows-amd64 JRE (1.8.0_05-b13), built on Mar 18 2014 01:08:39 by "java_re" with MS VC++ 10.0 (VS2010)
 
-time: Sat Jun 07 19:02:40 2014
+time: Sat Jun 07 18:56:08 2014
 elapsed time: 0 seconds
 
