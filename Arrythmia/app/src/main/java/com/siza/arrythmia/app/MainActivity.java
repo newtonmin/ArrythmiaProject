@@ -53,6 +53,7 @@ public class MainActivity extends ActionBarActivity {
     private static final byte  CHANNEL1 = 0x01;
     private static final byte  CHANNEL2 = 0x02;
 
+    private static boolean realTime = false;
     // Run/Pause status
     private boolean bReady = false;
     // receive data
@@ -311,6 +312,7 @@ public class MainActivity extends ActionBarActivity {
                 {
                     case R.id.rbAlert:
                         if (runButton.isChecked()) {
+                            realTime = false;
                             sendMessage("R");
                             bReady = true;
                         } else
@@ -318,6 +320,7 @@ public class MainActivity extends ActionBarActivity {
                         break;
                     case R.id.rbRealtime:
                         if (runButton.isChecked()) {
+                            realTime = true;
                             sendMessage("r");
                             bReady = true;
                         } else
@@ -372,7 +375,7 @@ public class MainActivity extends ActionBarActivity {
                                 bDataAvailable = false;
                                 dataIndex = 0; dataIndex1=0; dataIndex2=0;
                                 mWaveform.set_data(ch1_data);
-                                if(bReady){ // send "REQ_DATA" again
+                                if(bReady && realTime){ // send "REQ_DATA" again
                                     //MainActivity.this.sendMessage( new String(new byte[] {REQ_DATA}) );
                                     MainActivity.this.sendMessage("r");
                                 }
